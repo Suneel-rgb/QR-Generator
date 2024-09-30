@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <title>QR Generator</title>
+    <style>
+      body,
+      .card {
+        background-color: #eeebeb;
+        border-radius: 15px;
+      }
+      img {
+        border-radius: 15px;
+      }
+      .image {
+        background-color: #fff;
+        margin: 20px 0;
+        padding: 15%;
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: x-large;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-4">
+          <div class="card p-5 shadow">
+            <h1 class="text-center mb-4">QR Generator</h1>
+            <div class="image">
+              <img
+                src="./no-image.png"
+                alt="no-image"
+                class="img-fluid d-block mx-auto mb-3"
+                id="image"
+              />
+            </div>
+            <div class="form">
+              <input
+                type="text"
+                class="form-control mb-3 rounded-0"
+                id="content"
+                placeholder="Content in QRCode"
+              />
+              <button id="btnCreate" class="btn btn-success w-100 rounded-0">
+                Create QRCode
+              </button>
+              <!-- Download Button -->
+              <a
+                id="btnDownload"
+                class="btn btn-primary w-100 mt-3 rounded-0 d-none"
+                download="QRCode.png"
+              >
+                Download QRCode
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      let image = document.getElementById("image");
+      let content = document.getElementById("content");
+      let btnCreate = document.getElementById("btnCreate");
+      let btnDownload = document.getElementById("btnDownload");
+
+      btnCreate.onclick = () => {
+        if (content.value === "") return;
+        let linkQR = "http://api.qrserver.com/v1/create-qr-code/";
+        let qrSrc = linkQR + "?size=600x600&data=" + content.value;
+        image.src = qrSrc;
+
+        // Show download button and set href to QR code URL
+        btnDownload.href = qrSrc;
+        btnDownload.classList.remove("d-none");
+      };
+    </script>
+  </body>
+</html>
